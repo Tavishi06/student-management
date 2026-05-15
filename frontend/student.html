@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="student-dashboard">
+
+    <div class="student-topbar">
+
+      <h1>Student Dashboard</h1>
+
+      <button onclick="logout()" class="logout-btn">
+        Logout
+      </button>
+
+    </div>
+
+
+    <div class="student-profile-card">
+
+      <div class="profile-image">
+
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="student">
+
+      </div>
+
+      <div class="profile-details">
+
+        <h2 id="studentName"></h2>
+
+        <p id="studentEmail"></p>
+
+        <span class="student-role">
+          Student
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="student-info-grid">
+
+      <div class="info-card">
+
+        <h3>Courses</h3>
+
+        <p>Web Development</p>
+
+      </div>
+
+      <div class="info-card">
+
+        <h3>Attendance</h3>
+
+        <p>92%</p>
+
+      </div>
+
+      <div class="info-card">
+
+        <h3>Status</h3>
+
+        <p>Active</p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const role = localStorage.getItem("role");
+
+    if (role !== "student") {
+
+      alert("Access Denied");
+
+      window.location.href = "index.html";
+    }
+
+    const studentName = localStorage.getItem("studentName");
+
+    const studentEmail = localStorage.getItem("studentEmail");
+
+    document.getElementById("studentName").innerText =
+      studentName;
+
+    document.getElementById("studentEmail").innerText =
+      studentEmail;
+
+
+    function logout() {
+
+      localStorage.clear();
+
+      window.location.href = "index.html";
+    }
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="dashboard">
+
+    <div class="top-bar">
+
+      <h1>Admin Dashboard</h1>
+
+      <button onclick="logout()" class="logout-btn">
+        Logout
+      </button>
+
+    </div>
+
+    <div class="add-user-box">
+
+      <h2>Add New User</h2>
+
+      <input type="text" id="name" placeholder="Enter Name">
+
+      <input type="email" id="email" placeholder="Enter Email">
+
+      <input type="password" id="password" placeholder="Enter Password">
+
+      <select id="role">
+        <option value="student">Student</option>
+        <option value="admin">Admin</option>
+      </select>
+
+      <button onclick="addUser()">
+        Add User
+      </button>
+
+    </div>
+
+    <h2 class="user-heading">Registered Users</h2>
+
+    <div id="userContainer" class="user-container">
+
+    </div>
+
+  </div>
+
+  <script>
+
+    const role = localStorage.getItem("role");
+
+    if (role !== "admin") {
+
+      alert("Access Denied");
+
+      window.location.href = "index.html";
+    }
+
+    const userContainer = document.getElementById("userContainer");
+
+
+    // LOAD USERS
+
+    async function loadUsers() {
+
+      const response = await fetch("http://localhost:3000/users");
+
+      const users = await response.json();
+
+      userContainer.innerHTML = "";
+
+      users.forEach(user => {
+
+        const card = document.createElement("div");
+
+        card.classList.add("user-card");
+
+        card.innerHTML = `
+
+                    <h3>${user.name}</h3>
+
+                    <p>${user.email}</p>
+
+                    <p>Role: ${user.role}</p>
+
+                    <div class="card-buttons">
+
+                        <button onclick="deleteUser('${user._id}')">
+                            Delete
+                        </button>
+
+                    </div>
+                `;
+
+        userContainer.appendChild(card);
+      });
+    }
+
+
+    // ADD USER
+
+    async function addUser() {
+
+      const userData = {
+
+        name: document.getElementById("name").value,
+
+        email: document.getElementById("email").value,
+
+        password: document.getElementById("password").value,
+
+        role: document.getElementById("role").value
+      };
+
+      const response = await fetch("http://localhost:3000/register", {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(userData)
+      });
+
+      const data = await response.json();
+
+      alert(data.message);
+
+      loadUsers();
+    }
+
+
+    // DELETE USER
+
+    async function deleteUser(id) {
+
+      await fetch(`http://localhost:3000/delete-user/${id}`, {
+
+        method: "DELETE"
+      });
+
+      loadUsers();
+    }
+
+
+    // LOGOUT
+
+    function logout() {
+
+      localStorage.clear();
+
+      window.location.href = "index.html";
+    }
+
+
+    loadUsers();
+
+  </script>
+
+</body>
+
+</html>
