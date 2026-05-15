@@ -70,7 +70,7 @@
 
     async function loadUsers() {
 
-      const response = await fetch("http://localhost:3000/users");
+      const response = await fetch("https://student-management-h1tb.onrender.com/users");
 
       const users = await response.json();
 
@@ -119,7 +119,7 @@
         role: document.getElementById("role").value
       };
 
-      const response = await fetch("http://localhost:3000/register", {
+      const response = await fetch("https://student-management-h1tb.onrender.com /register", {
 
         method: "POST",
 
@@ -142,7 +142,7 @@
 
     async function deleteUser(id) {
 
-      await fetch(`http://localhost:3000/delete-user/${id}`, {
+      await fetch(`https://student-management-h1tb.onrender.com/delete-user/${id}`, {
 
         method: "DELETE"
       });

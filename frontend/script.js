@@ -11,7 +11,7 @@ async function registerUser() {
         role: document.getElementById("role").value
     };
 
-    const response = await fetch("http://localhost:3000/register", {
+    const response = await fetch("https://student-management-h1tb.onrender.com /register", {
 
         method: "POST",
 
@@ -40,7 +40,7 @@ async function loginUser() {
         password: document.getElementById("password").value
     };
 
-    const response = await fetch("http://localhost:3000/login", {
+    const response = await fetch("https://student-management-h1tb.onrender.com/login", {
 
         method: "POST",
 
